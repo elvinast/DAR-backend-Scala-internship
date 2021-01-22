@@ -23,7 +23,7 @@ object Boot extends App with JsonSerializer {
 
   val route: Route =
     concat(
-      path("healthcheck") {
+      path("makeup") {
         get {
           complete {
             "Ok"
@@ -51,10 +51,10 @@ object Boot extends App with JsonSerializer {
           },
           path(Segment) { cosmeticID =>
             put {
-              entity(as[Cosmetics]) { human =>
+              entity(as[Cosmetics]) { cosmetic =>
                 complete{
                   readInt(cosmeticID) match {
-                    case Some(id) => makeUpManager.putCosmetic(id, human)
+                    case Some(id) => makeUpManager.putCosmetic(id, cosmetic)
                     case None => FailedResponse("Wrong id format")
                   }
                 }

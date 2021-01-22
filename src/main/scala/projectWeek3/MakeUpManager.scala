@@ -7,21 +7,21 @@ case class MakeUpManager() {
   var cosmetics: Map[Int, Cosmetics] = Map()
   var cnt = 0
 
-  def createCosmetic(cosmetic: Cosmetics): CosmeticsCreated = {
+  def createCosmetic(cosmetic: Cosmetics): CosmeticsCreated = { //post
     cosmetics = cosmetics + (cnt -> cosmetic)
-    val response = CosmeticsCreated(cnt)
+    val response = CosmeticsCreated(cnt) //cnt = id
     cnt += 1
     response
   }
 
-  def getCosmetic(id: Int): Either[FailedResponse, Cosmetics] = {
+  def getCosmetic(id: Int): Either[FailedResponse, Cosmetics] = { //read
     cosmetics.get(id) match {
       case Some(cosmetic) => Right(cosmetic)
       case None => Left(FailedResponse("No such cosmetic exists :("))
     }
   }
 
-  def putCosmetic(id: Int, cosmetic: Cosmetics): Either[FailedResponse, SuccessfulResponse] = {
+  def putCosmetic(id: Int, cosmetic: Cosmetics): Either[FailedResponse, SuccessfulResponse] = { //update
     cosmetics.get(id) match {
       case Some(value) => {
         cosmetics = cosmetics + (id -> cosmetic)
@@ -31,7 +31,7 @@ case class MakeUpManager() {
     }
   }
 
-  def deleteCosmetic(id: Int): Either[FailedResponse, SuccessfulResponse] = {
+  def deleteCosmetic(id: Int): Either[FailedResponse, SuccessfulResponse] = { // ?
     cosmetics.get(id) match {
       case Some(cosmetic) => {
         Right(SuccessfulResponse(s"${cosmetic} removed "))
