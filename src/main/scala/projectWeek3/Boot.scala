@@ -11,6 +11,7 @@ import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import scala.concurrent.ExecutionContextExecutor
 
 object Boot extends App with JsonSerializer {
+
   implicit val system: ActorSystem = ActorSystem("http-server")
   implicit val materializer: ActorMaterializer = ActorMaterializer() //materialise stream
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
@@ -23,7 +24,7 @@ object Boot extends App with JsonSerializer {
 
   val route: Route =
     concat(
-      path("makeup") {
+      path("check") {
         get {
           complete {
             "Ok"
@@ -76,7 +77,4 @@ object Boot extends App with JsonSerializer {
     )
 
   Http().bindAndHandle(route, "0.0.0.0", 8080)
-
-
-
 }
